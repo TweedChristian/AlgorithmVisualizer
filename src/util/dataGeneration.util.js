@@ -57,15 +57,6 @@ const randomGraph = (max) => {
             id: i,
             neighbors: []
         };
-        // for(let j = i + 1; j <= max; j++){
-        //     if(Math.floor((Math.random() * 2))){
-        //         links.push({
-        //             source: i,
-        //             target: j
-        //         });
-        //         nodes[i].neighbors.push(j);
-        //     }
-        // }
     }
     for(let i = 0; i < edgeNumber; i++){
         let source = Math.ceil(Math.random() * max);
@@ -76,7 +67,6 @@ const randomGraph = (max) => {
         });
         nodes[source].neighbors.push(target);
     }
-    
     return {
         nodes,
         links
