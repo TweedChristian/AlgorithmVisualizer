@@ -7,7 +7,7 @@ Visualization for CS5084 at WPI
 2. Import d3js [Done]
 3. Implement nodes and vertices to display graphs [Done]
 4. Add d3colors [Done]
-5. Deploy to github io
+5. Deploy to github io [Done]
 6. Add arrow markers
 7. Click and run BFS
 8. Switch algorithms

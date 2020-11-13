@@ -2,30 +2,10 @@ import React, { Component } from 'react'
 import * as force from 'd3-force';
 import * as d3 from 'd3';
 import cool from '../util/colorsSchemes.enum';
+import addArrowToLines from '../util/appendArrow.util';
+import dataGenerator from '../util/dataGeneration.util';
 
-const initializeData = (number) => {
-    let nodes = {};
-    let links = [];
-    for (let i = 1; i <= number; i++) {
-        nodes[i] = {
-            id: i,
-            neighbors: []
-        }
-        for (let j = 1; j <= number; j++) {
-            links.push({
-                source: i,
-                target: j
-            });
-            nodes[i].neighbors.push(j);
-        }
-    }
-    return {
-        nodes,
-        links
-    };
-}
-
-const data = initializeData(10);
+const data = dataGenerator.randomGraph(6);
 const loadData = () => {
     const ticked = () => {
         links
@@ -45,18 +25,26 @@ const loadData = () => {
 
     const svg = d3.select('#graph')
         .attr('width', 500)
-        .attr('height', 500);
-
+        .attr('height', 500)
+        
+    addArrowToLines({
+        svg,
+        lineWidth: 1,
+        nodeRadius: 5,
+        color: cool[0]
+    });
+   
     let links = svg.selectAll('line').data(data.links)
         .enter()
         .append('line')
+        // .attr('marker-end', 'url(#arrow)')
         .style("stroke", cool[0])
-        .style('stroke-width', 0.2);
+        .style('stroke-width', 1);
 
     let nodes = svg.selectAll("circle")
         .data(Object.values(data.nodes)).enter()
         .append('circle')
-        .attr('r', 3)
+        .attr('r', 5)
         .attr('id', (d) => d.id)
         .style('fill', cool[5])
         .on('click', (d) => clickNode(d))
@@ -66,11 +54,10 @@ const loadData = () => {
             force.forceLink().id((d) => d.id)
                 .links(data.links)
         )
-        .force("charge", force.forceManyBody().strength(-50))
+        .force("charge", force.forceManyBody().strength(-90))
         .force("center", force.forceCenter(250, 250))
         .on("tick", ticked);
 };
-
 
 export class Graph extends Component {
     componentDidMount() {
