@@ -115,20 +115,40 @@ const randomGraph = (max) => {
 //Source: https://stackoverflow.com/questions/12790337/generating-a-random-dag
 const randomDAG = (dagOptions) => {
     dagOptions = defaultRandomDAGOptions(dagOptions);
+    let nodes = {};
+    let links = [];
 
     const height = dagOptions.minHeight + Math.ceil(Math.random() * (dagOptions.maxHeight - dagOptions.minHeight));
     let width;
-    let layer = 0;
+    let nodesCounter = 0;
     for(let i=0; i< height; i++){
         width = dagOptions.minWidth + Math.ceil(Math.random() + (dagOptions.maxWidth - dagOptions.minWidth));
 
-        for(let j=0; j < layer; j++){
-            for(let k = 0; k < width; k++){
-                //Add edge
+        for(let counter = nodesCounter; counter < nodesCounter + width; counter++ ){
+            nodes[counter + 1] = {
+                id: counter + 1,
+                neighbors: []
             }
         }
-        layer += width;
+
+        for(let j=0; j < nodesCounter; j++){
+            for(let k = 0; k < width; k++){
+                //Add edge
+                if(Math.random() >= dagOptions.percentPerEdge){
+                    links.push({
+                        source: j + 1,
+                        target: k + nodesCounter
+                    });
+                    nodes[j + 1].neighbors.push(k + nodesCounter);
+                }
+            }
+        }
+        nodes += width;
     }
+    return {
+        nodes,
+        links
+    };
 }
 
 const dataGenerator = {
