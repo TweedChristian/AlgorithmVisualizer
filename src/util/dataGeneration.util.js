@@ -1,4 +1,26 @@
-const doubleLinkCircle = (number) => {
+const maxSubsetOfEdges = (n) => {
+    return Math.floor(n * (n - 1) / 2);
+}
+
+const defaultRandomDAGOptions = (dagOptions) => {
+    dagOptions = !!dagOptions ? dagOptions : {
+        minWidth: 1,
+        maxWidth: 5,
+        minHeight: 3,
+        maxHeight: 5,
+        percentPerEdge: 0.3
+    };
+
+    dagOptions.minWidth = !!dagOptions.minWidth ? dagOptions.minWidth : 1;
+    dagOptions.maxWidth = !!dagOptions.maxWidth ? dagOptions.maxWidth : 5;
+    dagOptions.minHeight = !!dagOptions.minHeight ? dagOptions.minHeight : 3;
+    dagOptions.maxHeight = !!dagOptions.maxHeight ? dagOptions.maxHeight : 5;
+    dagOptions.percentPerEdge = !!dagOptions.percentPerEdge ? dagOptions.percentPerEdge : 0.3;
+
+    return dagOptions;
+}
+
+const doubleLinkCycleDirectedGraph = (number) => {
     let nodes = {};
     let links = [];
     for (let i = 1; i <= number; i++) {
@@ -15,12 +37,33 @@ const doubleLinkCircle = (number) => {
             target: i
         });
         nodes[i].neighbors.push(i % number + 1);
+        //Todo backwards neighbor values
     }
     return {
         nodes,
         links
     };
 };
+
+const singleLinkCycleDirectedGraph = (number) => {
+    let nodes = {};
+    let links = [];
+    for (let i = 1; i <= number; i++) {
+        nodes[i] = {
+            id: i,
+            neighbors: []
+        }
+        links.push({
+            source: i,
+            target: i % number + 1
+        });
+        nodes[i].neighbors.push(i % number + 1);
+    }
+    return {
+        nodes,
+        links
+    };
+}
 
 const completeGraph = (number) => {
     let nodes = {};
@@ -42,10 +85,6 @@ const completeGraph = (number) => {
         nodes,
         links
     };
-}
-
-const maxSubsetOfEdges = (n) => {
-    return Math.floor(n * (n - 1) / 2);
 }
 
 const randomGraph = (max) => {
@@ -73,10 +112,30 @@ const randomGraph = (max) => {
     };
 }
 
+//Source: https://stackoverflow.com/questions/12790337/generating-a-random-dag
+const randomDAG = (dagOptions) => {
+    dagOptions = defaultRandomDAGOptions(dagOptions);
+
+    const height = dagOptions.minHeight + Math.ceil(Math.random() * (dagOptions.maxHeight - dagOptions.minHeight));
+    let width;
+    let layer = 0;
+    for(let i=0; i< height; i++){
+        width = dagOptions.minWidth + Math.ceil(Math.random() + (dagOptions.maxWidth - dagOptions.minWidth));
+
+        for(let j=0; j < layer; j++){
+            for(let k = 0; k < width; k++){
+                //Add edge
+            }
+        }
+        layer += width;
+    }
+}
+
 const dataGenerator = {
-    doubleLinkCircle,
+    singleLinkCycleDirectedGraph,
+    doubleLinkCycleDirectedGraph,
     completeGraph,
     randomGraph
-}
+};
 
 export default dataGenerator;
