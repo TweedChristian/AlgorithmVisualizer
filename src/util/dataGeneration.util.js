@@ -134,7 +134,7 @@ const randomDAG = (dagOptions) => {
         for(let j=0; j < nodesCounter; j++){
             for(let k = 0; k < width; k++){
                 //Add edge
-                if(Math.random() >= dagOptions.percentPerEdge){
+                if(Math.random() >= dagOptions.percentPerEdge && (j+1) !== (k + nodesCounter)){
                     links.push({
                         source: j + 1,
                         target: k + nodesCounter
@@ -143,8 +143,9 @@ const randomDAG = (dagOptions) => {
                 }
             }
         }
-        nodes += width;
+        nodesCounter += width;
     }
+    
     return {
         nodes,
         links
@@ -155,7 +156,8 @@ const dataGenerator = {
     singleLinkCycleDirectedGraph,
     doubleLinkCycleDirectedGraph,
     completeGraph,
-    randomGraph
+    randomGraph,
+    randomDAG
 };
 
 export default dataGenerator;

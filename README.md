@@ -8,12 +8,14 @@ Visualization for CS5084 at WPI
 3. Implement nodes and vertices to display graphs [Done]
 4. Add d3colors [Done]
 5. Deploy to github io [Done]
-6. Add arrow markers
-7. Click and run BFS
+6. Add arrow markers [Done]
+7. Click and run BFS [Done]
 8. Switch algorithms
 9. Add the ability to add weights to the edges 
 10. Add ability to drag and drop nodes
-11. Randomly generate a network
+11. Randomly generate a network [Doneish]
+12. Clean up arrow markers
+13. Clean up random dag
 
 
 ### Algorithms ###
