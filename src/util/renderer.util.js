@@ -36,13 +36,13 @@ const renderData = (data, options) => {
     }
 
     const svg = d3.select('#graph')
-        .attr('width', !!options.svgWidth ? options.svgWidth : 500)
-        .attr('height', !!options.svgHeight ? options.svgHeight : 500)
+        .attr('width', options.svgWidth)
+        .attr('height', options.svgHeight)
         
     addArrowToLines({
         svg,
-        lineWidth: !!options.lineWidth ? options.lineWidth : 1,
-        nodeRadius:!!options.nodeRadius ? options.nodeRadius : 5,
+        lineWidth: options.lineWidth,
+        nodeRadius: options.nodeRadius,
         color: cool[0]
     });
 
@@ -64,12 +64,12 @@ const renderData = (data, options) => {
         .append('line')
         .attr('marker-end', 'url(#arrow)')
         .style("stroke", cool[0])
-        .style('stroke-width',!!options.lineWidth ? options.lineWidth : 1);
+        .style('stroke-width', options.lineWidth);
 
     let nodes = svg.selectAll("circle")
         .data(Object.values(data.nodes)).enter()
         .append('circle')
-        .attr('r', !!options.nodeRadius ? options.nodeRadius : 5)
+        .attr('r', options.nodeRadius)
         .attr('id', (d) => d.id)
         .style('fill', cool[5])
         .on('click', (d) => clickNode(d))
@@ -81,8 +81,8 @@ const renderData = (data, options) => {
         )
         .force("charge", force.forceManyBody().strength(-90))
         .force("center", force.forceCenter(
-            !!options.svgWidth ? options.svgWidth / 2 : 250, 
-            !!options.svgWidth ? options.svgWidth / 2 : 250
+            options.svgWidth, 
+            options.svgWidth
         ))
         .on("tick", ticked);
 };

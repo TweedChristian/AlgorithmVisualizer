@@ -6,6 +6,7 @@ const data = dataGenerator.randomGraph(10);
 export class Graph extends Component {
     componentDidMount() {
         renderData(data);
+        console.log(dataGenerator)
     }
     render() {
         return (
